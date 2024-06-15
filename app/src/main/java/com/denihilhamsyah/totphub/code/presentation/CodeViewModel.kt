@@ -31,6 +31,7 @@ class CodeViewModel @Inject constructor(
 
     fun onTOTPSecretChanged(secret: String) {
         _totpSecret.value = secret
+        generateTOTPCode()
     }
 
     private fun startGenerateTOTPCode() {
@@ -55,7 +56,11 @@ class CodeViewModel @Inject constructor(
     private fun generateTOTPCode() {
         _totpSecret.value?.let { secret ->
             val counter = System.currentTimeMillis() / TIME_STEP_MILLISECONDS
-            _totpCode.value = totpRepository.generateTOTP(secret, counter)
+            try {
+                _totpCode.value = totpRepository.generateTOTP(secret, counter)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 
