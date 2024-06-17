@@ -1,3 +1,3 @@
-package com.denihilhamsyah.totphub.code.data.exception
+package com.denihilhamsyah.totphub.core.exception
 
 class CodeGenerationException(message: String?, cause: Throwable?) : Exception(message, cause)

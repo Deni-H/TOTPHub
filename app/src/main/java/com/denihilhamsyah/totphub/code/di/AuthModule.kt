@@ -1,6 +1,6 @@
 package com.denihilhamsyah.totphub.code.di
 
-import com.denihilhamsyah.totphub.code.data.local.TOTPRepositoryImpl
+import com.denihilhamsyah.totphub.code.data.TOTPRepositoryImpl
 import com.denihilhamsyah.totphub.code.domain.repository.TOTPRepository
 import dagger.Module
 import dagger.Provides

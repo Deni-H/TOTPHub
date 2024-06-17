@@ -1,6 +1,6 @@
-package com.denihilhamsyah.totphub.code.data.local
+package com.denihilhamsyah.totphub.code.data
 
-import com.denihilhamsyah.totphub.code.data.exception.CodeGenerationException
+import com.denihilhamsyah.totphub.core.exception.CodeGenerationException
 import com.denihilhamsyah.totphub.code.domain.repository.TOTPRepository
 import org.apache.commons.codec.binary.Base32
 import java.security.InvalidKeyException

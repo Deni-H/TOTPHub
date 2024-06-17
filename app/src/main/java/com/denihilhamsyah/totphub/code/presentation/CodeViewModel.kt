@@ -63,7 +63,6 @@ class CodeViewModel @Inject constructor(
     }
 
     companion object {
-        private const val TAG = "CodeViewModel"
         private const val ONE_MILLISECOND = 10L
         private const val TIME_STEP_SECONDS = 30L
         private const val TIME_STEP_MILLISECONDS = TIME_STEP_SECONDS * 1000L

@@ -85,4 +85,8 @@ dependencies {
 
     // Realm kotlin
     implementation(libs.realm.kotlin.base)
+
+    // Arrow
+    implementation(libs.arrow.core)
+    implementation(libs.arrow.core.coroutine)
 }
