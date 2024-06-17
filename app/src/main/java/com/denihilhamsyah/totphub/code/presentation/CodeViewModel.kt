@@ -1,6 +1,5 @@
 package com.denihilhamsyah.totphub.code.presentation
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.denihilhamsyah.totphub.code.domain.repository.TOTPRepository
