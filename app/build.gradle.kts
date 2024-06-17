@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.dagger.hilt.android)
     alias(libs.plugins.devtools.ksp)
+    alias(libs.plugins.realm.kotlin)
 }
 
 android {
@@ -78,4 +79,10 @@ dependencies {
 
     // Hilt navigation
     implementation(libs.androidx.hilt.navigation)
+
+    // Kotlin coroutine
+    implementation(libs.kotlinx.coroutines)
+
+    // Realm kotlin
+    implementation(libs.realm.kotlin.base)
 }

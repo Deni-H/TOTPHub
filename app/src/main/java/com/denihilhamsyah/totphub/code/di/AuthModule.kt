@@ -14,7 +14,7 @@ object AuthModule {
 
     @Provides
     @Singleton
-    fun provideAuthRepository(): TOTPRepository {
+    fun provideTOTPRepository(): TOTPRepository {
         return TOTPRepositoryImpl()
     }
 }

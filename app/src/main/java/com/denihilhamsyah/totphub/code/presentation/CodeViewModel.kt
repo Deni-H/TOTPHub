@@ -42,7 +42,6 @@ class CodeViewModel @Inject constructor(
 
                 // Generate new TOTP code at the start of each interval
                 if (millisUntilNextInterval > _remainingTimeStep.value) {
-                    Log.d(TAG, "startGenerateTOTPCode: Executed")
                     generateTOTPCode()
                 }
 
