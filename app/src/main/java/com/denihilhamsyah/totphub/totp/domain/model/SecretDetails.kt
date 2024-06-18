@@ -1,4 +1,4 @@
-package com.denihilhamsyah.totphub.code.domain.model
+package com.denihilhamsyah.totphub.totp.domain.model
 
 data class SecretDetails(
     val id: String = "",

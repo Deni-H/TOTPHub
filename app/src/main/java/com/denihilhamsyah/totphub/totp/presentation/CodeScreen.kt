@@ -1,4 +1,4 @@
-package com.denihilhamsyah.totphub.code.presentation
+package com.denihilhamsyah.totphub.totp.presentation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier

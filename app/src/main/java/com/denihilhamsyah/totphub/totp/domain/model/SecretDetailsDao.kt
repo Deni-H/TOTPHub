@@ -1,4 +1,4 @@
-package com.denihilhamsyah.totphub.code.domain.model
+package com.denihilhamsyah.totphub.totp.domain.model
 
 import io.realm.kotlin.types.RealmObject
 import io.realm.kotlin.types.annotations.PrimaryKey
