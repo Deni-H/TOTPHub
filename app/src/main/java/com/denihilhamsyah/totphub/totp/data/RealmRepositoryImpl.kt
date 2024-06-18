@@ -1,12 +1,12 @@
-package com.denihilhamsyah.totphub.code.data
+package com.denihilhamsyah.totphub.totp.data
 
 import arrow.core.Either
-import com.denihilhamsyah.totphub.code.common.error.DatabaseError
-import com.denihilhamsyah.totphub.code.common.error.toDatabaseError
-import com.denihilhamsyah.totphub.code.domain.model.SecretDetails
-import com.denihilhamsyah.totphub.code.domain.model.SecretDetailsDao
-import com.denihilhamsyah.totphub.code.domain.model.toSecretDetails
-import com.denihilhamsyah.totphub.code.domain.repository.DatabaseRepository
+import com.denihilhamsyah.totphub.totp.common.error.DatabaseError
+import com.denihilhamsyah.totphub.totp.common.error.toDatabaseError
+import com.denihilhamsyah.totphub.totp.domain.model.SecretDetails
+import com.denihilhamsyah.totphub.totp.domain.model.SecretDetailsDao
+import com.denihilhamsyah.totphub.totp.domain.model.toSecretDetails
+import com.denihilhamsyah.totphub.totp.domain.repository.DatabaseRepository
 import io.realm.kotlin.Realm
 import io.realm.kotlin.ext.query
 import kotlinx.coroutines.flow.Flow

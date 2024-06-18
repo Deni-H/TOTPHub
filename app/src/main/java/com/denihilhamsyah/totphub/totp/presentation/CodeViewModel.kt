@@ -1,4 +1,4 @@
-package com.denihilhamsyah.totphub.code.presentation
+package com.denihilhamsyah.totphub.totp.presentation
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel

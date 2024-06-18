@@ -1,6 +1,6 @@
-package com.denihilhamsyah.totphub.code.di
+package com.denihilhamsyah.totphub.totp.di
 
-import com.denihilhamsyah.totphub.code.domain.model.SecretDetailsDao
+import com.denihilhamsyah.totphub.totp.domain.model.SecretDetailsDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

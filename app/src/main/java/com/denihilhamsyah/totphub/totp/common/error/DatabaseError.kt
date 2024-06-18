@@ -1,4 +1,4 @@
-package com.denihilhamsyah.totphub.code.common.error
+package com.denihilhamsyah.totphub.totp.common.error
 
 enum class DatabaseError {
     ALREADY_EXISTS,

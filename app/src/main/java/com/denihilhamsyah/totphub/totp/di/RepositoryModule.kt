@@ -1,9 +1,9 @@
-package com.denihilhamsyah.totphub.code.di
+package com.denihilhamsyah.totphub.totp.di
 
-import com.denihilhamsyah.totphub.code.data.RealmRepositoryImpl
-import com.denihilhamsyah.totphub.code.data.TOTPRepositoryImpl
-import com.denihilhamsyah.totphub.code.domain.repository.DatabaseRepository
-import com.denihilhamsyah.totphub.code.domain.repository.TOTPRepository
+import com.denihilhamsyah.totphub.totp.data.RealmRepositoryImpl
+import com.denihilhamsyah.totphub.totp.data.TOTPRepositoryImpl
+import com.denihilhamsyah.totphub.totp.domain.repository.DatabaseRepository
+import com.denihilhamsyah.totphub.totp.domain.repository.TOTPRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

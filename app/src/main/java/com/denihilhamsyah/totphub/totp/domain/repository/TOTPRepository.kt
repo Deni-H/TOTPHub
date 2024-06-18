@@ -1,4 +1,4 @@
-package com.denihilhamsyah.totphub.code.domain.repository
+package com.denihilhamsyah.totphub.totp.domain.repository
 
 interface TOTPRepository {
 
