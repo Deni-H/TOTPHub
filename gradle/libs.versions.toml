@@ -13,6 +13,7 @@ hiltNavigation = "1.2.0"
 kspVersion = "1.9.0-1.0.13"
 common-codec = "1.15"
 realm-koltin-version = "1.16.0"
+realm-gradle-version = "10.15.1"
 coroutine-version = "1.8.0"
 arrow-version = "1.2.0"
 
@@ -36,9 +37,10 @@ dagger-hilt-android = { group = "com.google.dagger", name = "hilt-android", vers
 dagger-hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
 common-codec = { group = "commons-codec", name = "commons-codec", version.ref = "common-codec"}
 kotlinx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutine-version"}
-realm-kotlin-base = { group = "io.realm.kotlin", name = "library-base", version.ref = "realm-koltin-version"}
 arrow-core = { group = "io.arrow-kt", name = "arrow-core", version.ref = "arrow-version"}
 arrow-core-coroutine = { group = "io.arrow-kt", name = "arrow-fx-coroutines", version.ref = "arrow-version"}
+realm-kotlin-base = { group = "io.realm.kotlin", name = "library-base", version.ref = "realm-koltin-version"}
+realm-gradle-plugin = { group = "io.realm", name = "realm-gradle-plugin", version.ref = "realm-gradle-version"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

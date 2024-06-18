@@ -1,12 +1,9 @@
 package com.denihilhamsyah.totphub.code.domain.model
 
-import io.realm.kotlin.types.RealmObject
-import io.realm.kotlin.types.annotations.PrimaryKey
-import org.mongodb.kbson.ObjectId
-
-class SecretDetails : RealmObject {
-    @PrimaryKey var _id: ObjectId = ObjectId()
-    var secret: String = ""
-    var secretLabel : String = ""
-    var accountName : String = ""
-}
+data class SecretDetails(
+    val id: String = "",
+    val secret: String,
+    val secretLabel: String,
+    val accountName : String,
+    val timestamp: Int = 0
+)
