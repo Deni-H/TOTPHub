@@ -1,17 +1,21 @@
 [versions]
-agp = "8.4.1"
+agp = "8.5.0"
 kotlin = "1.9.0"
-coreKtx = "1.10.1"
+coreKtx = "1.13.1"
 junit = "4.13.2"
 junitVersion = "1.1.5"
 espressoCore = "3.5.1"
-lifecycleRuntimeKtx = "2.6.1"
-activityCompose = "1.8.0"
-composeBom = "2023.08.00"
+lifecycleRuntimeKtx = "2.8.2"
+activityCompose = "1.9.0"
+composeBom = "2024.06.00"
 hilt = "2.51"
 hiltNavigation = "1.2.0"
 kspVersion = "1.9.0-1.0.13"
 common-codec = "1.15"
+realm-koltin-version = "1.16.0"
+realm-gradle-version = "10.15.1"
+coroutine-version = "1.8.0"
+arrow-version = "1.2.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -32,9 +36,15 @@ androidx-hilt-navigation = { group = "androidx.hilt", name = "hilt-navigation-co
 dagger-hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 dagger-hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
 common-codec = { group = "commons-codec", name = "commons-codec", version.ref = "common-codec"}
+kotlinx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutine-version"}
+arrow-core = { group = "io.arrow-kt", name = "arrow-core", version.ref = "arrow-version"}
+arrow-core-coroutine = { group = "io.arrow-kt", name = "arrow-fx-coroutines", version.ref = "arrow-version"}
+realm-kotlin-base = { group = "io.realm.kotlin", name = "library-base", version.ref = "realm-koltin-version"}
+realm-gradle-plugin = { group = "io.realm", name = "realm-gradle-plugin", version.ref = "realm-gradle-version"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "kspVersion" }
 dagger-hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+realm-kotlin = { id = "io.realm.kotlin", version.ref = "realm-koltin-version"}
