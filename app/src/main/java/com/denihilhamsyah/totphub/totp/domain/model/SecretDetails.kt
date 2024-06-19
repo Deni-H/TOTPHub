@@ -5,5 +5,13 @@ data class SecretDetails(
     val secret: String,
     val secretLabel: String,
     val accountName : String,
-    val timestamp: Int = 0
-)
+    val timestamp: Long = 0L
+) {
+    fun toSecretDetailsEntity(): SecretDetailsEntity {
+        return SecretDetailsEntity(
+            secret = this.secret,
+            secretLabel = this.secretLabel,
+            accountName = this.accountName
+        )
+    }
+}

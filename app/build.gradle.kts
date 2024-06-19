@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.dagger.hilt.android)
     alias(libs.plugins.devtools.ksp)
     alias(libs.plugins.realm.kotlin)
+    alias(libs.plugins.room.plugin)
 }
 
 android {
@@ -50,6 +51,9 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    room {
+        schemaDirectory("$projectDir/schemas")
+    }
 }
 
 dependencies {
@@ -89,4 +93,11 @@ dependencies {
     // Arrow
     implementation(libs.arrow.core)
     implementation(libs.arrow.core.coroutine)
+
+    // Room
+    ksp(libs.room.compiler)
+    implementation(libs.room.ktx)
+    implementation(libs.room.runtime)
+    implementation(libs.room.paging)
+    testImplementation(libs.room.testing)
 }

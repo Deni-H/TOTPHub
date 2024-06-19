@@ -13,11 +13,13 @@ interface DatabaseRepository {
 
     suspend fun addSecret(
         secretDetails: SecretDetails
-    ): Either<DatabaseError, SecretDetails>
+    ): Either<DatabaseError, Unit>
 
     suspend fun editSecret(
         secretDetails: SecretDetails
-    ): Either<DatabaseError, SecretDetails>
+    ): Either<DatabaseError, Unit>
 
-    suspend fun deleteSecret(secretId: String): Either<DatabaseError, Unit>
+    suspend fun deleteSecret(
+        secretDetails: SecretDetails
+    ): Either<DatabaseError, Unit>
 }
