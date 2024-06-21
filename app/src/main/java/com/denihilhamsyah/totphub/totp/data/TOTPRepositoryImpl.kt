@@ -1,6 +1,5 @@
 package com.denihilhamsyah.totphub.totp.data
 
-import com.denihilhamsyah.totphub.totp.common.exception.CodeGenerationException
 import com.denihilhamsyah.totphub.totp.domain.repository.TOTPRepository
 import org.apache.commons.codec.binary.Base32
 import java.security.InvalidKeyException
@@ -16,11 +15,12 @@ class TOTPRepositoryImpl : TOTPRepository {
             val hash = generateHash(secret, counter)
             getDigitsFromHash(hash)
         } catch (e: Exception) {
-            throw CodeGenerationException("Failed to generate code. See nested exception.", e)
+            throw TOTPGenerationException("Failed to generate code. See nested exception.", e)
         }
     }
 
-    @Throws(InvalidKeyException::class, NoSuchAlgorithmException::class)
+    @Throws(InvalidKeyException::class, NoSuchAlgorithmException::class,
+        IllegalArgumentException::class)
     private fun generateHash(key: String, counter: Long): ByteArray {
         val data = ByteArray(8)
         var value = counter

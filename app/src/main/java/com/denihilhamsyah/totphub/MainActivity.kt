@@ -4,7 +4,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.denihilhamsyah.totphub.totp.presentation.CodeScreen
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.ui.Modifier
+import com.denihilhamsyah.totphub.totp.presentation.TOTPScreen
 import com.denihilhamsyah.totphub.ui.theme.TOTPHubTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -15,7 +17,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             TOTPHubTheme {
-                CodeScreen()
+                TOTPScreen(modifier = Modifier.fillMaxSize())
             }
         }
     }

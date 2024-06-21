@@ -1,5 +1,7 @@
 package com.denihilhamsyah.totphub.totp.domain.model
 
+import com.denihilhamsyah.totphub.totp.data.room.SecretDetailsEntity
+
 data class SecretDetails(
     val id: String = "",
     val secret: String,

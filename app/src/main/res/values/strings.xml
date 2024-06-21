@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">TOTP Hub</string>
+    <string name="secret_already_exists">Secret already exists</string>
+    <string name="secret_not_found">Secret not found</string>
+    <string name="an_error_occurred">An error occurred</string>
+    <string name="secret_added">Secret added</string>
+    <string name="add_secret_button">Add secret button</string>
+    <string name="invalid_characters">Invalid characters</string>
+    <string name="too_short">Too short</string>
+    <string name="cannot_be_empty">Cannot be empty</string>
 </resources>

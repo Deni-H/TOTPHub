@@ -1,9 +1,8 @@
 package com.denihilhamsyah.totphub.totp.data
 
 import arrow.core.Either
-import com.denihilhamsyah.totphub.totp.common.error.DatabaseError
-import com.denihilhamsyah.totphub.totp.common.error.toDatabaseError
 import com.denihilhamsyah.totphub.totp.data.room.RoomDatabaseDao
+import com.denihilhamsyah.totphub.totp.domain.error.DatabaseError
 import com.denihilhamsyah.totphub.totp.domain.model.SecretDetails
 import com.denihilhamsyah.totphub.totp.domain.repository.DatabaseRepository
 import kotlinx.coroutines.flow.Flow

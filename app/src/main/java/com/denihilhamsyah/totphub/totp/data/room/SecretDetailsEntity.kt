@@ -1,7 +1,8 @@
-package com.denihilhamsyah.totphub.totp.domain.model
+package com.denihilhamsyah.totphub.totp.data.room
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.denihilhamsyah.totphub.totp.domain.model.SecretDetails
 import java.util.UUID
 
 @Entity

@@ -16,6 +16,7 @@ coroutine-version = "1.8.1"
 arrow-version = "1.2.4"
 realm-koltin-version = "2.0.0"
 room-version = "2.6.1"
+lifecycleRuntimeComposeAndroid = "2.8.2"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -45,6 +46,7 @@ room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "
 room-paging = { group = "androidx.room", name = "room-paging", version.ref = "room-version"}
 room-testing = { group = "androidx.room", name = "room-testing", version.ref = "room-version"}
 room-ktx = { group = "androidx.room", name = "room-ktx", version = "room-version"}
+androidx-lifecycle-runtime-compose-android = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose-android", version.ref = "lifecycleRuntimeComposeAndroid" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
