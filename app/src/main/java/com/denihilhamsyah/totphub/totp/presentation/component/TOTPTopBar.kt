@@ -13,6 +13,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.denihilhamsyah.totphub.totp.presentation.component.theme_switch.ThemeSwitch
+import com.denihilhamsyah.totphub.totp.presentation.component.theme_switch.ThemeSwitchState
+import com.denihilhamsyah.totphub.totp.presentation.component.theme_switch.rememberThemeSwitchState
 import com.denihilhamsyah.totphub.ui.theme.TOTPHubTheme
 
 @Composable

@@ -1,4 +1,4 @@
-package com.denihilhamsyah.totphub.totp.presentation.component
+package com.denihilhamsyah.totphub.totp.presentation.component.ui_text
 
 import android.content.Context
 import androidx.annotation.StringRes

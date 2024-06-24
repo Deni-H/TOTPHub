@@ -1,15 +1,10 @@
-package com.denihilhamsyah.totphub.totp.presentation.component
+package com.denihilhamsyah.totphub.totp.presentation.component.theme_switch
 
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.Saver
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
@@ -57,31 +52,6 @@ fun ThemeSwitchPreview() {
             onThemeSwitch = {
                 themeSwitchState.switchMode(it)
             }
-        )
-    }
-}
-
-@Composable
-fun rememberThemeSwitchState(
-    initial: Boolean = false)
-        : ThemeSwitchState {
-    return rememberSaveable(saver = ThemeSwitchState.Saver) {
-        ThemeSwitchState(initial)
-    }
-}
-
-class ThemeSwitchState(initial: Boolean) {
-    var isDarkMode: Boolean by mutableStateOf(initial)
-        private set
-
-    fun switchMode(isDarkMode: Boolean) {
-        this.isDarkMode = isDarkMode
-    }
-
-    companion object {
-        val Saver: Saver<ThemeSwitchState, *> = Saver(
-            save = { it.isDarkMode },
-            restore = { ThemeSwitchState(it) }
         )
     }
 }

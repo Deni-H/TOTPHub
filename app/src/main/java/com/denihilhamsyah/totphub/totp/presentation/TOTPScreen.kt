@@ -39,7 +39,7 @@ import com.denihilhamsyah.totphub.totp.presentation.component.ObserveAsEvents
 import com.denihilhamsyah.totphub.totp.presentation.component.PrimaryButton
 import com.denihilhamsyah.totphub.totp.presentation.component.SecondaryButton
 import com.denihilhamsyah.totphub.totp.presentation.component.TOTPTopBar
-import com.denihilhamsyah.totphub.totp.presentation.component.ThemeSwitchState
+import com.denihilhamsyah.totphub.totp.presentation.component.theme_switch.ThemeSwitchState
 import com.denihilhamsyah.totphub.ui.theme.TOTPHubTheme
 import kotlinx.coroutines.launch
 

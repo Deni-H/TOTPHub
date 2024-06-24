@@ -1,4 +1,4 @@
-package com.denihilhamsyah.totphub.totp.presentation.component
+package com.denihilhamsyah.totphub.totp.presentation.component.text_field
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.MaterialTheme
