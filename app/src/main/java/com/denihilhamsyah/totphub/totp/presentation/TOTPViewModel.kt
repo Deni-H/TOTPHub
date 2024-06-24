@@ -8,6 +8,9 @@ import com.denihilhamsyah.totphub.totp.domain.repository.DatabaseRepository
 import com.denihilhamsyah.totphub.totp.domain.repository.TOTPRepository
 import com.denihilhamsyah.totphub.totp.domain.use_case.IsValidSecretUseCase
 import com.denihilhamsyah.totphub.totp.domain.util.Result
+import com.denihilhamsyah.totphub.totp.presentation.component.TextFieldState
+import com.denihilhamsyah.totphub.totp.presentation.component.UiText
+import com.denihilhamsyah.totphub.totp.presentation.component.asUiText
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow

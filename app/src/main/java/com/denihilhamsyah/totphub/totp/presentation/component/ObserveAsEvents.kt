@@ -1,4 +1,4 @@
-package com.denihilhamsyah.totphub.totp.presentation
+package com.denihilhamsyah.totphub.totp.presentation.component
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect

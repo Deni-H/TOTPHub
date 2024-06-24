@@ -1,4 +1,4 @@
-package com.denihilhamsyah.totphub.totp.presentation
+package com.denihilhamsyah.totphub.totp.presentation.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row

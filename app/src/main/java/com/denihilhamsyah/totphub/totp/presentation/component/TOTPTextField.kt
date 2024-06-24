@@ -1,4 +1,4 @@
-package com.denihilhamsyah.totphub.totp.presentation
+package com.denihilhamsyah.totphub.totp.presentation.component
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.MaterialTheme

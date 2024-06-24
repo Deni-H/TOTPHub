@@ -1,4 +1,4 @@
-package com.denihilhamsyah.totphub.totp.presentation
+package com.denihilhamsyah.totphub.totp.presentation.component
 
 data class TextFieldState(
     val text: String = "",

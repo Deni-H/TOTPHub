@@ -7,7 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
 import com.denihilhamsyah.totphub.totp.presentation.TOTPScreen
-import com.denihilhamsyah.totphub.totp.presentation.rememberThemeSwitchState
+import com.denihilhamsyah.totphub.totp.presentation.component.rememberThemeSwitchState
 import com.denihilhamsyah.totphub.ui.theme.TOTPHubTheme
 import dagger.hilt.android.AndroidEntryPoint
 

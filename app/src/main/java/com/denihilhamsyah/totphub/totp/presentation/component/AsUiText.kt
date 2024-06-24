@@ -1,4 +1,4 @@
-package com.denihilhamsyah.totphub.totp.presentation
+package com.denihilhamsyah.totphub.totp.presentation.component
 
 import com.denihilhamsyah.totphub.R
 import com.denihilhamsyah.totphub.totp.domain.error.DatabaseError

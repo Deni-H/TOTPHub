@@ -35,6 +35,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.denihilhamsyah.totphub.R
 import com.denihilhamsyah.totphub.totp.domain.model.SecretDetails
+import com.denihilhamsyah.totphub.totp.presentation.component.ObserveAsEvents
+import com.denihilhamsyah.totphub.totp.presentation.component.PrimaryButton
+import com.denihilhamsyah.totphub.totp.presentation.component.SecondaryButton
+import com.denihilhamsyah.totphub.totp.presentation.component.TOTPTopBar
+import com.denihilhamsyah.totphub.totp.presentation.component.ThemeSwitchState
 import com.denihilhamsyah.totphub.ui.theme.TOTPHubTheme
 import kotlinx.coroutines.launch
 
