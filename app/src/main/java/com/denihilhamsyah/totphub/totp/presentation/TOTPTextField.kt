@@ -36,9 +36,7 @@ fun TOTPTextField(
         singleLine = singleLine,
         isError = textFieldState.error != null,
         supportingText = {
-            if (textFieldState.error != null) {
-                Text(textFieldState.error.asString())
-            }
+            textFieldState.error?.let { Text(it.asString()) }
         },
         textStyle = MaterialTheme.typography.bodyMedium
     )

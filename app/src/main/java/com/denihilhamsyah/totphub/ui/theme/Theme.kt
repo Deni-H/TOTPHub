@@ -12,20 +12,24 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+    primary = blue,
+    secondary = marine,
+    background = darkBlue,
+    tertiary = Pink80,
+    surface = darkBlue,
+    onPrimary = Color.White,
+    onSecondary = Color.White,
+    onBackground = Color.White,
 )
 
 private val LightColorScheme = lightColorScheme(
     primary = blue,
-    secondary = PurpleGrey40,
+    secondary = Color.White,
     tertiary = cyanBlue,
-
     background = cyanBlue,
-    surface = Color.White,
+    surface = cyanBlue,
     onPrimary = Color.White,
-    onSecondary = Color.White,
+    onSecondary = darkBlue,
     onTertiary = Color.White,
     onBackground = darkBlue,
     onSurface = darkBlue,
@@ -35,7 +39,7 @@ private val LightColorScheme = lightColorScheme(
 fun TOTPHubTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
