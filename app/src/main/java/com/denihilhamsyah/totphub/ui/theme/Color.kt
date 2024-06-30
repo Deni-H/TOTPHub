@@ -12,5 +12,5 @@ val blue = Color(0xFF1A79FF)
 val cyanBlue = Color(0xFFEEF5FF)
 val darkBlue = Color(0xFF000A3A)
 val marine = Color(0xFF002D61)
-
+val tealishBlue = Color(0xFFB2B9D9)
 val shadowColor = Color(0xFF1B77FB)

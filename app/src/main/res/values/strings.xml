@@ -13,4 +13,9 @@
     <string name="generate_2fa_codes">Generate 2FA codes to keep your data secure</string>
     <string name="scan_qr_code">Scan QR code</string>
     <string name="enter_manually">Enter manually</string>
+    <string name="enter_account_details">Enter account details</string>
+    <string name="account_name">Account name</string>
+    <string name="secret_label">Secret label</string>
+    <string name="secret">Secret</string>
+    <string name="add">Add</string>
 </resources>
