@@ -1,5 +1,6 @@
 package com.denihilhamsyah.totphub.totp.presentation
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -38,6 +39,7 @@ import com.denihilhamsyah.totphub.totp.presentation.component.ObserveAsEvents
 import com.denihilhamsyah.totphub.totp.presentation.component.PrimaryButton
 import com.denihilhamsyah.totphub.totp.presentation.component.SecondaryButton
 import com.denihilhamsyah.totphub.totp.presentation.component.TOTPTopBar
+import com.denihilhamsyah.totphub.totp.presentation.component.dialog.rememberDialogState
 import com.denihilhamsyah.totphub.totp.presentation.component.theme_switch.ThemeSwitchState
 import com.denihilhamsyah.totphub.ui.theme.TOTPHubTheme
 import kotlinx.coroutines.launch
@@ -51,13 +53,14 @@ fun TOTPScreen(
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
+    val dialogState = rememberDialogState()
 
     val secrets by viewModel.secrets.collectAsStateWithLifecycle()
     val state by viewModel.totpState.collectAsStateWithLifecycle()
 
+    val accountNameFieldState by viewModel.accountNameFieldState.collectAsStateWithLifecycle()
     val secretFieldState by viewModel.secretFieldState.collectAsStateWithLifecycle()
     val secretLabelFieldState by viewModel.secretLabelFieldState.collectAsStateWithLifecycle()
-    val accountNameFieldState by viewModel.accountNameFieldState.collectAsStateWithLifecycle()
 
     ObserveAsEvents(viewModel.totpEvent) { event ->
         when (event) {
@@ -75,6 +78,17 @@ fun TOTPScreen(
     }
 
     if (state.isLoading) LoadingDialog()
+
+    AddSecretDialog(
+        dialogState = dialogState,
+        accountNameFieldState = accountNameFieldState,
+        onAccountNameFieldChange = viewModel::onAccountNameFieldChange,
+        secretLabelFieldState = secretLabelFieldState,
+        onSecretLabelFieldChange = viewModel::onSecretLabelFieldChange,
+        secretFieldState = secretFieldState,
+        onSecretFieldChange = viewModel::onSecretFieldChange,
+        onButtonClick = viewModel::onAddSecretDialogClick
+    )
 
     Scaffold(
         modifier = modifier,
@@ -103,7 +117,7 @@ fun TOTPScreen(
             TOTPEmpty(
                 modifier.padding(padding),
                 scanQrOnClick = {},
-                enterManuallyOnClick = {}
+                enterManuallyOnClick = dialogState::show
             )
         }
         else TOTPContent(
@@ -118,7 +132,7 @@ fun TOTPContent(
     modifier: Modifier = Modifier,
     secrets: List<SecretDetails>,
 ) {
-
+    Log.d("TOTPContent", "TOTPContent: $secrets")
 }
 
 @Preview

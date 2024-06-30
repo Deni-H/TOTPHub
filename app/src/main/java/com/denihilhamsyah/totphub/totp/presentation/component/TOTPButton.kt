@@ -22,6 +22,7 @@ fun PrimaryButton(
     modifier: Modifier = Modifier,
     text: String,
     radius: Dp = 32.dp,
+    enabled: Boolean = true,
     onClick: () -> Unit
 ) {
     Button(
@@ -30,6 +31,7 @@ fun PrimaryButton(
             containerColor = MaterialTheme.colorScheme.primary,
             contentColor = MaterialTheme.colorScheme.onPrimary
         ),
+        enabled = enabled,
         shape = RoundedCornerShape(radius),
         onClick = onClick,
         content = {
@@ -45,6 +47,8 @@ fun PrimaryButton(
 fun SecondaryButton(
     modifier: Modifier = Modifier,
     text: String,
+    radius: Dp = 32.dp,
+    enabled: Boolean = true,
     onClick: () -> Unit
 ) {
     Button(
@@ -53,6 +57,8 @@ fun SecondaryButton(
             containerColor = MaterialTheme.colorScheme.secondary,
             contentColor = MaterialTheme.colorScheme.onSecondary
         ),
+        enabled = enabled,
+        shape = RoundedCornerShape(radius),
         onClick = onClick,
         content = {
             Text(

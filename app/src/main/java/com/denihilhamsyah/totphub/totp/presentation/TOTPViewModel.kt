@@ -6,6 +6,8 @@ import com.denihilhamsyah.totphub.R
 import com.denihilhamsyah.totphub.totp.domain.model.SecretDetails
 import com.denihilhamsyah.totphub.totp.domain.repository.DatabaseRepository
 import com.denihilhamsyah.totphub.totp.domain.repository.TOTPRepository
+import com.denihilhamsyah.totphub.totp.domain.use_case.IsValidAccountNameUseCase
+import com.denihilhamsyah.totphub.totp.domain.use_case.IsValidSecretLabelUseCase
 import com.denihilhamsyah.totphub.totp.domain.use_case.IsValidSecretUseCase
 import com.denihilhamsyah.totphub.totp.domain.util.Result
 import com.denihilhamsyah.totphub.totp.presentation.component.text_field.TextFieldState
@@ -25,7 +27,9 @@ import javax.inject.Inject
 class TOTPViewModel @Inject constructor(
     private val totpRepository: TOTPRepository,
     private val databaseRepository: DatabaseRepository,
-    private val isValidSecretUseCase: IsValidSecretUseCase
+    private val isValidSecretUseCase: IsValidSecretUseCase,
+    private val isValidSecretLabelUseCase: IsValidSecretLabelUseCase,
+    private val isValidAccountNameUseCase: IsValidAccountNameUseCase
 ) : ViewModel() {
 
     private val totpEventChannel = Channel<TOTPEvent>()
@@ -57,7 +61,35 @@ class TOTPViewModel @Inject constructor(
         _secretFieldState.value = secretFieldState.value.copy(text = secret)
     }
 
-    fun addSecret() {
+    fun onSecretLabelFieldChange(secretLabel: String) {
+        when (val result = isValidSecretLabelUseCase(secretLabel)) {
+            is Result.Error -> _secretLabelFieldState.value = secretLabelFieldState.value.copy(error = result.error.asUiText())
+            is Result.Success -> _secretLabelFieldState.value = secretLabelFieldState.value.copy(error = null)
+        }
+        _secretLabelFieldState.value = secretLabelFieldState.value.copy(text = secretLabel)
+    }
+
+    fun onAccountNameFieldChange(accountName: String) {
+        when (val result = isValidAccountNameUseCase(accountName)) {
+            is Result.Error -> _accountNameFieldState.value = accountNameFieldState.value.copy(error = result.error.asUiText())
+            is Result.Success -> _accountNameFieldState.value = accountNameFieldState.value.copy(error = null)
+        }
+        _accountNameFieldState.value = accountNameFieldState.value.copy(text = accountName)
+    }
+
+    fun onAddSecretDialogClick() {
+        onSecretFieldChange(secretFieldState.value.text)
+        onSecretLabelFieldChange(secretLabelFieldState.value.text)
+        onAccountNameFieldChange(accountNameFieldState.value.text)
+
+        if (
+            secretFieldState.value.error == null &&
+            secretLabelFieldState.value.error == null &&
+            accountNameFieldState.value.error == null
+        ) addSecret()
+    }
+
+    private fun addSecret() {
         viewModelScope.launch {
             _totpState.value = totpState.value.copy(isLoading = true)
             databaseRepository.addSecret(SecretDetails(

@@ -34,7 +34,8 @@ fun AddSecretDialog(
     onSecretLabelFieldChange: (String) -> Unit,
     secretFieldState: TextFieldState,
     onSecretFieldChange: (String) -> Unit,
-    onAddSecret: () -> Unit
+    isButtonEnabled: Boolean = true,
+    onButtonClick: () -> Unit
 ) {
     DialogWrapper(
         dialogState = dialogState,
@@ -76,7 +77,8 @@ fun AddSecretDialog(
                         .fillMaxWidth(),
                     radius = 8.dp,
                     text = stringResource(R.string.add),
-                    onClick = onAddSecret
+                    enabled = isButtonEnabled,
+                    onClick = onButtonClick
                 )
             }
         }

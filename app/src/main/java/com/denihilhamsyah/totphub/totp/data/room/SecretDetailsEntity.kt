@@ -10,7 +10,8 @@ data class SecretDetailsEntity(
     @PrimaryKey val id: String = UUID.randomUUID().toString(),
     val secret: String,
     val secretLabel: String,
-    val accountName : String
+    val accountName : String,
+    val timestamp: Long = System.currentTimeMillis()
 ) {
     fun toSecretDetails(): SecretDetails {
         return SecretDetails(
@@ -18,7 +19,7 @@ data class SecretDetailsEntity(
             secret = this.secret,
             secretLabel = this.secretLabel,
             accountName = this.accountName,
-            timestamp = UUID.fromString(this.id).timestamp()
+            timestamp = this.timestamp
         )
     }
 }

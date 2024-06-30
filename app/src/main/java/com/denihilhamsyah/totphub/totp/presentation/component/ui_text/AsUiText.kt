@@ -17,5 +17,7 @@ fun TextFieldError.asUiText(): UiText {
         TextFieldError.Secret.EMPTY -> UiText.StringResource(R.string.cannot_be_empty)
         TextFieldError.Secret.TO_SHORT -> UiText.StringResource(R.string.too_short)
         TextFieldError.Secret.INVALID_CHARACTERS -> UiText.StringResource(R.string.invalid_characters)
+        TextFieldError.AccountName.EMPTY -> UiText.StringResource(R.string.cannot_be_empty)
+        TextFieldError.SecretLabel.EMPTY -> UiText.StringResource(R.string.cannot_be_empty)
     }
 }
