@@ -18,4 +18,5 @@
     <string name="secret_label">Secret label</string>
     <string name="secret">Secret</string>
     <string name="add">Add</string>
+    <string name="indicator_animation">Indicator animation</string>
 </resources>

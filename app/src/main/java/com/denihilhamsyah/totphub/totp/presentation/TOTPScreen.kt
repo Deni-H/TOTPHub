@@ -1,14 +1,19 @@
 package com.denihilhamsyah.totphub.totp.presentation
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -41,6 +46,7 @@ import com.denihilhamsyah.totphub.totp.presentation.component.SecondaryButton
 import com.denihilhamsyah.totphub.totp.presentation.component.TOTPTopBar
 import com.denihilhamsyah.totphub.totp.presentation.component.dialog.rememberDialogState
 import com.denihilhamsyah.totphub.totp.presentation.component.theme_switch.ThemeSwitchState
+import com.denihilhamsyah.totphub.totp.presentation.component.time_indicator.TimeIndicator
 import com.denihilhamsyah.totphub.ui.theme.TOTPHubTheme
 import kotlinx.coroutines.launch
 
@@ -94,12 +100,18 @@ fun TOTPScreen(
         modifier = modifier,
         floatingActionButton = {
             if (secrets.isNotEmpty()) {
-                FloatingActionButton(onClick = { /*TODO*/ }) {
-                    Icon(
-                        imageVector = ImageVector.vectorResource(R.drawable.ic_add),
-                        contentDescription = stringResource(R.string.add_secret_button)
-                    )
-                }
+                FloatingActionButton(
+                    shape = CircleShape,
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor = MaterialTheme.colorScheme.onPrimary,
+                    onClick = dialogState::show,
+                    content = {
+                        Icon(
+                            imageVector = ImageVector.vectorResource(R.drawable.ic_add),
+                            contentDescription = stringResource(R.string.add_secret_button)
+                        )
+                    }
+                )
             }
         },
         topBar = {
@@ -132,7 +144,66 @@ fun TOTPContent(
     modifier: Modifier = Modifier,
     secrets: List<SecretDetails>,
 ) {
-    Log.d("TOTPContent", "TOTPContent: $secrets")
+
+}
+
+@Composable
+fun TOTPCard(
+    secretDetails: SecretDetails
+) {
+    Card(
+        shape = RoundedCornerShape(32.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.secondary
+        )
+    ) {
+        Row(
+            modifier = Modifier.padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = secretDetails.secretLabel,
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.onBackground
+                )
+                Text(
+                    text = secretDetails.accountName,
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onBackground
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = secretDetails.totp,
+                    style = MaterialTheme.typography.bodyLarge,
+                    fontWeight = FontWeight.SemiBold,
+                    color = MaterialTheme.colorScheme.onBackground
+                )
+            }
+            Spacer(modifier = Modifier.width(8.dp))
+            TimeIndicator(
+                value = secretDetails.countdown,
+                maxValue = 30_000
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun TOTPCardPreview() {
+    TOTPHubTheme {
+        TOTPCard(
+            secretDetails = SecretDetails(
+                id = "",
+                accountName = "denyhilhamsyh@gmail.com",
+                secret = "",
+                secretLabel = "Youtube",
+                totp = "123456",
+                countdown = 25_000
+            )
+        )
+    }
 }
 
 @Preview
@@ -181,14 +252,6 @@ fun TOTPEmpty(
             onClick = enterManuallyOnClick
         )
     }
-}
-
-@Composable
-fun TOTPCard(
-    modifier: Modifier = Modifier,
-    secretDetails: SecretDetails
-) {
-
 }
 
 @Composable
