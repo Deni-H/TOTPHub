@@ -52,11 +52,14 @@ class TOTPRepositoryImpl : TOTPRepository {
         truncatedHash %= 10.0.pow(DIGITS_LENGTH.toDouble()).toLong()
 
         // Left pad with 0s for a n-digit code
-        return String.format("%0${DIGITS_LENGTH}d", truncatedHash)
+        val formattedNumber = String.format("%0${DIGITS_LENGTH}d", truncatedHash)
+        return formattedNumber.chunked(NUMBER_CHUNK).joinToString(FORMAT_SEPARATOR)
     }
 
     companion object {
         private const val ALGORITHM = "HmacSHA1"
         private const val DIGITS_LENGTH = 6
+        private const val NUMBER_CHUNK = 3
+        private const val FORMAT_SEPARATOR = ""
     }
 }

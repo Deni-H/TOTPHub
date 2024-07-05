@@ -39,6 +39,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemContentType
@@ -69,9 +70,12 @@ fun TOTPScreen(
     val secrets = viewModel.secrets.collectAsLazyPagingItems()
     val state by viewModel.totpState.collectAsStateWithLifecycle()
 
+    val isSecretLoading = secrets.loadState.refresh is LoadState.Loading
+
     val accountNameFieldState by viewModel.accountNameFieldState.collectAsStateWithLifecycle()
     val secretFieldState by viewModel.secretFieldState.collectAsStateWithLifecycle()
     val secretLabelFieldState by viewModel.secretLabelFieldState.collectAsStateWithLifecycle()
+    val remainingCountDown by viewModel.remainingCountDown.collectAsStateWithLifecycle()
 
     ObserveAsEvents(viewModel.totpEvent) { event ->
         when (event) {
@@ -107,7 +111,7 @@ fun TOTPScreen(
     Scaffold(
         modifier = modifier,
         floatingActionButton = {
-            if (secrets.itemCount > 0) {
+            if (secrets.itemCount > 0 && !isSecretLoading) {
                 FloatingActionButton(
                     shape = CircleShape,
                     containerColor = MaterialTheme.colorScheme.primary,
@@ -133,7 +137,7 @@ fun TOTPScreen(
         },
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
     ) { padding ->
-        if (secrets.itemCount <= 0) {
+        if (secrets.itemCount <= 0 && !isSecretLoading) {
             TOTPEmpty(
                 modifier.padding(padding),
                 scanQrOnClick = {},
@@ -142,7 +146,8 @@ fun TOTPScreen(
         }
         else TOTPContent(
             modifier = modifier.padding(padding),
-            secrets = secrets
+            secrets = secrets,
+            remainingCountDown = remainingCountDown
         )
     }
 }
@@ -151,6 +156,7 @@ fun TOTPScreen(
 fun TOTPContent(
     modifier: Modifier = Modifier,
     secrets: LazyPagingItems<SecretDetails>,
+    remainingCountDown: Long
 ) {
     LazyColumn(
         modifier = modifier.padding(16.dp),
@@ -162,14 +168,18 @@ fun TOTPContent(
             contentType = secrets.itemContentType { "secret_details" }
         ) { index: Int ->
             val secretDetails = secrets[index]
-            if (secretDetails != null) TOTPCard(secretDetails)
+            if (secretDetails != null) TOTPCard(
+                secretDetails = secretDetails,
+                remainingCountDown = remainingCountDown
+            )
         }
     }
 }
 
 @Composable
 fun TOTPCard(
-    secretDetails: SecretDetails
+    secretDetails: SecretDetails,
+    remainingCountDown: Long
 ) {
     Card(
         shape = RoundedCornerShape(32.dp),
@@ -202,27 +212,10 @@ fun TOTPCard(
             }
             Spacer(modifier = Modifier.width(8.dp))
             TimeIndicator(
-                value = secretDetails.countdown,
+                value = remainingCountDown.toInt(),
                 maxValue = 30_000
             )
         }
-    }
-}
-
-@Preview
-@Composable
-private fun TOTPCardPreview() {
-    TOTPHubTheme {
-        TOTPCard(
-            secretDetails = SecretDetails(
-                id = "",
-                accountName = "denyhilhamsyh@gmail.com",
-                secret = "",
-                secretLabel = "Youtube",
-                totp = "123456",
-                countdown = 25_000
-            )
-        )
     }
 }
 

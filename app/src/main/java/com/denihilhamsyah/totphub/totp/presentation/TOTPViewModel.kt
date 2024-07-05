@@ -16,6 +16,7 @@ import com.denihilhamsyah.totphub.totp.presentation.component.ui_text.UiText
 import com.denihilhamsyah.totphub.totp.presentation.component.ui_text.asUiText
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -47,6 +48,14 @@ class TOTPViewModel @Inject constructor(
 
     private val _accountNameFieldState = MutableStateFlow(TextFieldState())
     val accountNameFieldState = _accountNameFieldState.asStateFlow()
+
+    private val _remainingCountDown = MutableStateFlow(0L)
+    val remainingCountDown = _remainingCountDown.asStateFlow()
+
+
+    init {
+        startGenerateTOTPCode()
+    }
 
     fun onSecretFieldChange(secret: String) {
         when (val result = isValidSecretUseCase(secret)) {
@@ -109,5 +118,29 @@ class TOTPViewModel @Inject constructor(
             clearAddDialogFieldState()
             _totpState.value = totpState.value.copy(isLoading = false)
         }
+    }
+
+    private fun startGenerateTOTPCode() {
+        viewModelScope.launch {
+            while (true) {
+                val currentTimeMillis = System.currentTimeMillis()
+                val millisUntilNextInterval = TIME_STEP_MILLISECONDS - (currentTimeMillis % TIME_STEP_MILLISECONDS)
+
+                // Generate new TOTP code at the start of each interval
+                if (millisUntilNextInterval > _remainingCountDown.value) {
+                    // Generate TOTP
+                }
+
+                // Update the remaining countdown
+                _remainingCountDown.value = millisUntilNextInterval
+                delay(TEN_MILLISECOND)
+            }
+        }
+    }
+
+    companion object {
+        private const val TEN_MILLISECOND = 10L
+        private const val TIME_STEP_SECONDS = 30L
+        private const val TIME_STEP_MILLISECONDS = TIME_STEP_SECONDS * 1000L
     }
 }
