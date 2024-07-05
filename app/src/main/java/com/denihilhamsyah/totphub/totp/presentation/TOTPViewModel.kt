@@ -72,6 +72,12 @@ class TOTPViewModel @Inject constructor(
         _accountNameFieldState.value = accountNameFieldState.value.copy(text = accountName)
     }
 
+    private fun clearAddDialogFieldState() {
+        _accountNameFieldState.value = TextFieldState()
+        _secretLabelFieldState.value = TextFieldState()
+        _secretFieldState.value = TextFieldState()
+    }
+
     fun onAddSecretDialogClick() {
         onSecretFieldChange(secretFieldState.value.text)
         onSecretLabelFieldChange(secretLabelFieldState.value.text)
@@ -100,6 +106,7 @@ class TOTPViewModel @Inject constructor(
                     val errorMessage = it.asUiText()
                     totpEventChannel.send(TOTPEvent.OnOperationFailed(errorMessage))
                 }
+            clearAddDialogFieldState()
             _totpState.value = totpState.value.copy(isLoading = false)
         }
     }
