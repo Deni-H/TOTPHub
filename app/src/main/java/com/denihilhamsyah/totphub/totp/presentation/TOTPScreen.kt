@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -38,6 +39,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.itemContentType
+import androidx.paging.compose.itemKey
 import com.denihilhamsyah.totphub.R
 import com.denihilhamsyah.totphub.totp.domain.model.SecretDetails
 import com.denihilhamsyah.totphub.totp.presentation.component.ObserveAsEvents
@@ -61,7 +66,7 @@ fun TOTPScreen(
     val snackbarHostState = remember { SnackbarHostState() }
     val dialogState = rememberDialogState()
 
-    val secrets by viewModel.secrets.collectAsStateWithLifecycle()
+    val secrets = viewModel.secrets.collectAsLazyPagingItems()
     val state by viewModel.totpState.collectAsStateWithLifecycle()
 
     val accountNameFieldState by viewModel.accountNameFieldState.collectAsStateWithLifecycle()
@@ -93,13 +98,16 @@ fun TOTPScreen(
         onSecretLabelFieldChange = viewModel::onSecretLabelFieldChange,
         secretFieldState = secretFieldState,
         onSecretFieldChange = viewModel::onSecretFieldChange,
-        onButtonClick = viewModel::onAddSecretDialogClick
+        onButtonClick = {
+            viewModel.onAddSecretDialogClick()
+            dialogState.hide()
+        }
     )
 
     Scaffold(
         modifier = modifier,
         floatingActionButton = {
-            if (secrets.isNotEmpty()) {
+            if (secrets.itemCount > 0) {
                 FloatingActionButton(
                     shape = CircleShape,
                     containerColor = MaterialTheme.colorScheme.primary,
@@ -125,7 +133,7 @@ fun TOTPScreen(
         },
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
     ) { padding ->
-        if (secrets.isEmpty()) {
+        if (secrets.itemCount <= 0) {
             TOTPEmpty(
                 modifier.padding(padding),
                 scanQrOnClick = {},
@@ -142,9 +150,21 @@ fun TOTPScreen(
 @Composable
 fun TOTPContent(
     modifier: Modifier = Modifier,
-    secrets: List<SecretDetails>,
+    secrets: LazyPagingItems<SecretDetails>,
 ) {
-
+    LazyColumn(
+        modifier = modifier.padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        items(
+            count = secrets.itemCount,
+            key = secrets.itemKey { it.id },
+            contentType = secrets.itemContentType { "secret_details" }
+        ) { index: Int ->
+            val secretDetails = secrets[index]
+            if (secretDetails != null) TOTPCard(secretDetails)
+        }
+    }
 }
 
 @Composable

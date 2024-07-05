@@ -1,5 +1,9 @@
 package com.denihilhamsyah.totphub.totp.data
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.map
 import arrow.core.Either
 import com.denihilhamsyah.totphub.totp.data.room.RoomDatabaseDao
 import com.denihilhamsyah.totphub.totp.domain.error.DatabaseError
@@ -12,12 +16,20 @@ class DatabaseRepositoryImpl(
     private val db: RoomDatabaseDao
 ) : DatabaseRepository {
 
-    override val secrets: Flow<List<SecretDetails>>
-        get() = db.secrets.map { secrets ->
-            secrets.map { secretDetailsEntity ->
-                secretDetailsEntity.toSecretDetails()
+    override val secrets: Flow<PagingData<SecretDetails>>
+        get() = Pager(
+            PagingConfig(
+                pageSize = 10,
+                prefetchDistance = 20
+            ),
+            pagingSourceFactory = { db.secrets }
+        )
+            .flow
+            .map { pagingData ->
+                pagingData.map { secretDetailsEntity ->
+                    secretDetailsEntity.toSecretDetails()
+                }
             }
-        }
 
     override suspend fun getSecretById(secretId: String): Either<DatabaseError, SecretDetails> {
         return Either

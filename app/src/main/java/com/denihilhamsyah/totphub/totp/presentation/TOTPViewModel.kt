@@ -2,6 +2,7 @@ package com.denihilhamsyah.totphub.totp.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.cachedIn
 import com.denihilhamsyah.totphub.R
 import com.denihilhamsyah.totphub.totp.domain.model.SecretDetails
 import com.denihilhamsyah.totphub.totp.domain.repository.DatabaseRepository
@@ -16,10 +17,8 @@ import com.denihilhamsyah.totphub.totp.presentation.component.ui_text.asUiText
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -38,11 +37,7 @@ class TOTPViewModel @Inject constructor(
     private val _totpState = MutableStateFlow(TOTPState())
     val totpState = _totpState.asStateFlow()
 
-    val secrets = databaseRepository.secrets.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(),
-        initialValue = emptyList()
-    )
+    val secrets = databaseRepository.secrets.cachedIn(viewModelScope)
 
     private val _secretFieldState = MutableStateFlow(TextFieldState())
     val secretFieldState = _secretFieldState.asStateFlow()

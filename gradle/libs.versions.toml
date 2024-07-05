@@ -17,6 +17,7 @@ arrow-version = "1.2.4"
 realm-koltin-version = "2.0.0"
 room-version = "2.6.1"
 lifecycleRuntimeComposeAndroid = "2.8.2"
+paging_version = "3.3.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -47,6 +48,8 @@ room-paging = { group = "androidx.room", name = "room-paging", version.ref = "ro
 room-testing = { group = "androidx.room", name = "room-testing", version.ref = "room-version"}
 room-ktx = { group = "androidx.room", name = "room-ktx", version = "room-version"}
 androidx-lifecycle-runtime-compose-android = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose-android", version.ref = "lifecycleRuntimeComposeAndroid" }
+androidx-paging-runtime = { group = "androidx.paging", name = "paging-runtime", version.ref = "paging_version" }
+androidx-paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "paging_version" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
