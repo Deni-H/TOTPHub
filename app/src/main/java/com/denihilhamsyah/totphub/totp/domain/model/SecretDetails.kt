@@ -8,8 +8,6 @@ data class SecretDetails(
     val secretLabel: String,
     val accountName : String,
     val timestamp: Long = 0L,
-    val totp: String = "-",
-    val countdown: Int = 0
 ) {
     fun toSecretDetailsEntity(): SecretDetailsEntity {
         return SecretDetailsEntity(

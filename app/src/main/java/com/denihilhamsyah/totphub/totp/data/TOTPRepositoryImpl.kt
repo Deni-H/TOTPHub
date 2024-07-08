@@ -60,6 +60,6 @@ class TOTPRepositoryImpl : TOTPRepository {
         private const val ALGORITHM = "HmacSHA1"
         private const val DIGITS_LENGTH = 6
         private const val NUMBER_CHUNK = 3
-        private const val FORMAT_SEPARATOR = ""
+        private const val FORMAT_SEPARATOR = " "
     }
 }

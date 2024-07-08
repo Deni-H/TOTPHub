@@ -20,6 +20,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -38,7 +39,12 @@ class TOTPViewModel @Inject constructor(
     private val _totpState = MutableStateFlow(TOTPState())
     val totpState = _totpState.asStateFlow()
 
-    val secrets = databaseRepository.secrets.cachedIn(viewModelScope)
+    val secrets = databaseRepository.secrets(
+        onChange = ::onSecretChange
+    ).cachedIn(viewModelScope)
+
+    private val _totpCodes = MutableStateFlow<MutableMap<String, String>>(mutableMapOf())
+    val totpCodes = _totpCodes.asStateFlow()
 
     private val _secretFieldState = MutableStateFlow(TextFieldState())
     val secretFieldState = _secretFieldState.asStateFlow()
@@ -52,9 +58,8 @@ class TOTPViewModel @Inject constructor(
     private val _remainingCountDown = MutableStateFlow(0L)
     val remainingCountDown = _remainingCountDown.asStateFlow()
 
-
     init {
-        startGenerateTOTPCode()
+        startClock()
     }
 
     fun onSecretFieldChange(secret: String) {
@@ -120,16 +125,23 @@ class TOTPViewModel @Inject constructor(
         }
     }
 
-    private fun startGenerateTOTPCode() {
+    private fun onSecretChange(secretDetails: SecretDetails) {
+        _totpCodes.update { currentTotpCodes ->
+            val totp = totpRepository.generateTOTP(secretDetails.secret, createCounter())
+            currentTotpCodes.apply {
+                this[secretDetails.secret] = totp
+            }
+        }
+    }
+
+    private fun startClock() {
         viewModelScope.launch {
             while (true) {
                 val currentTimeMillis = System.currentTimeMillis()
                 val millisUntilNextInterval = TIME_STEP_MILLISECONDS - (currentTimeMillis % TIME_STEP_MILLISECONDS)
 
                 // Generate new TOTP code at the start of each interval
-                if (millisUntilNextInterval > _remainingCountDown.value) {
-                    // Generate TOTP
-                }
+                if (millisUntilNextInterval > _remainingCountDown.value) generateTOTP()
 
                 // Update the remaining countdown
                 _remainingCountDown.value = millisUntilNextInterval
@@ -137,6 +149,17 @@ class TOTPViewModel @Inject constructor(
             }
         }
     }
+
+    private fun generateTOTP() {
+        val currentTotpCodes = _totpCodes.value
+        currentTotpCodes.keys.forEach { secret ->
+            val totp = totpRepository.generateTOTP(secret, createCounter())
+            currentTotpCodes[secret] = totp
+        }
+        _totpCodes.value = currentTotpCodes
+    }
+
+    private fun createCounter() = System.currentTimeMillis() / TIME_STEP_MILLISECONDS
 
     companion object {
         private const val TEN_MILLISECOND = 10L

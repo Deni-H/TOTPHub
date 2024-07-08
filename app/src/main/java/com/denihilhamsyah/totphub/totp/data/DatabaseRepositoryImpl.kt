@@ -16,20 +16,25 @@ class DatabaseRepositoryImpl(
     private val db: RoomDatabaseDao
 ) : DatabaseRepository {
 
-    override val secrets: Flow<PagingData<SecretDetails>>
-        get() = Pager(
+    override fun secrets(
+        onChange: (SecretDetails) -> Unit
+    ): Flow<PagingData<SecretDetails>> {
+        return Pager(
             PagingConfig(
                 pageSize = 10,
-                prefetchDistance = 20
+                prefetchDistance = 20,
+                enablePlaceholders = true
             ),
             pagingSourceFactory = { db.secrets }
         )
             .flow
             .map { pagingData ->
                 pagingData.map { secretDetailsEntity ->
+                    onChange(secretDetailsEntity.toSecretDetails())
                     secretDetailsEntity.toSecretDetails()
                 }
             }
+    }
 
     override suspend fun getSecretById(secretId: String): Either<DatabaseError, SecretDetails> {
         return Either

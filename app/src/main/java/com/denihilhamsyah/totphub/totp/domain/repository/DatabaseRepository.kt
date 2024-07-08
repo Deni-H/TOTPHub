@@ -8,7 +8,9 @@ import kotlinx.coroutines.flow.Flow
 
 interface DatabaseRepository {
 
-    val secrets: Flow<PagingData<SecretDetails>>
+    fun secrets(
+        onChange: (SecretDetails) -> Unit
+    ): Flow<PagingData<SecretDetails>>
 
     suspend fun getSecretById(secretId: String): Either<DatabaseError, SecretDetails>
 

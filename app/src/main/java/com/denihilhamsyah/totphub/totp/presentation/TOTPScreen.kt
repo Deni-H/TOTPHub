@@ -68,6 +68,7 @@ fun TOTPScreen(
     val dialogState = rememberDialogState()
 
     val secrets = viewModel.secrets.collectAsLazyPagingItems()
+    val totpCodes by viewModel.totpCodes.collectAsStateWithLifecycle()
     val state by viewModel.totpState.collectAsStateWithLifecycle()
 
     val isSecretLoading = secrets.loadState.refresh is LoadState.Loading
@@ -147,6 +148,7 @@ fun TOTPScreen(
         else TOTPContent(
             modifier = modifier.padding(padding),
             secrets = secrets,
+            totpCodes = totpCodes,
             remainingCountDown = remainingCountDown
         )
     }
@@ -156,10 +158,11 @@ fun TOTPScreen(
 fun TOTPContent(
     modifier: Modifier = Modifier,
     secrets: LazyPagingItems<SecretDetails>,
+    totpCodes: MutableMap<String, String>,
     remainingCountDown: Long
 ) {
     LazyColumn(
-        modifier = modifier.padding(16.dp),
+        modifier = modifier.padding(horizontal = 16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         items(
@@ -170,7 +173,8 @@ fun TOTPContent(
             val secretDetails = secrets[index]
             if (secretDetails != null) TOTPCard(
                 secretDetails = secretDetails,
-                remainingCountDown = remainingCountDown
+                remainingCountDown = remainingCountDown,
+                totpCode = totpCodes[secretDetails.secret] ?: "-"
             )
         }
     }
@@ -179,6 +183,7 @@ fun TOTPContent(
 @Composable
 fun TOTPCard(
     secretDetails: SecretDetails,
+    totpCode: String,
     remainingCountDown: Long
 ) {
     Card(
@@ -204,7 +209,7 @@ fun TOTPCard(
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = secretDetails.totp,
+                    text = totpCode,
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.SemiBold,
                     color = MaterialTheme.colorScheme.onBackground
@@ -268,6 +273,6 @@ fun TOTPEmpty(
 }
 
 @Composable
-fun LoadingDialog(modifier: Modifier = Modifier) {
+fun LoadingDialog() {
     CircularProgressIndicator()
 }
