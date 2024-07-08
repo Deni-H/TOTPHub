@@ -6,4 +6,5 @@ plugins {
     alias(libs.plugins.dagger.hilt.android) apply false
     alias(libs.plugins.devtools.ksp) apply false
     alias(libs.plugins.realm.kotlin) apply false
+    alias(libs.plugins.room.plugin) apply false
 }

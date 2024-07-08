@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">TOTP Hub</string>
+    <string name="secret_already_exists">Secret already exists</string>
+    <string name="secret_not_found">Secret not found</string>
+    <string name="an_error_occurred">An error occurred</string>
+    <string name="secret_added">Secret added</string>
+    <string name="add_secret_button">Add secret button</string>
+    <string name="invalid_characters">Invalid characters</string>
+    <string name="too_short">Too short</string>
+    <string name="cannot_be_empty">Cannot be empty</string>
+    <string name="theme_mode_icon">Theme mode icon</string>
+    <string name="lets_get_started">Let\'s get started!</string>
+    <string name="generate_2fa_codes">Generate 2FA codes to keep your data secure</string>
+    <string name="scan_qr_code">Scan QR code</string>
+    <string name="enter_manually">Enter manually</string>
+    <string name="enter_account_details">Enter account details</string>
+    <string name="account_name">Account name</string>
+    <string name="secret_label">Secret label</string>
+    <string name="secret">Secret</string>
+    <string name="add">Add</string>
+    <string name="indicator_animation">Indicator animation</string>
 </resources>

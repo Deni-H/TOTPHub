@@ -1,14 +1,14 @@
 package com.denihilhamsyah.totphub.totp.di
 
-import com.denihilhamsyah.totphub.totp.data.RealmRepositoryImpl
+import com.denihilhamsyah.totphub.totp.data.DatabaseRepositoryImpl
 import com.denihilhamsyah.totphub.totp.data.TOTPRepositoryImpl
+import com.denihilhamsyah.totphub.totp.data.room.RoomDatabaseInstance
 import com.denihilhamsyah.totphub.totp.domain.repository.DatabaseRepository
 import com.denihilhamsyah.totphub.totp.domain.repository.TOTPRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import io.realm.kotlin.Realm
 import javax.inject.Singleton
 
 @Module
@@ -23,7 +23,7 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideDatabaseRepository(realm: Realm): DatabaseRepository {
-        return RealmRepositoryImpl(realm)
-    }
+    fun provideRoomDatabaseRepository(
+        roomDatabaseInstance: RoomDatabaseInstance
+    ): DatabaseRepository = DatabaseRepositoryImpl(roomDatabaseInstance.db)
 }
