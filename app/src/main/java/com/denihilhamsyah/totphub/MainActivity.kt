@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
 import com.denihilhamsyah.totphub.totp.presentation.TOTPScreen
@@ -17,7 +18,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            val themeSwitchState = rememberThemeSwitchState()
+            val themeSwitchState = rememberThemeSwitchState(isSystemInDarkTheme())
 
             TOTPHubTheme(darkTheme = themeSwitchState.isDarkMode) {
                 TOTPScreen(
