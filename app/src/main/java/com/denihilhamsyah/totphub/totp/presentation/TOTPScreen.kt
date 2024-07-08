@@ -140,7 +140,6 @@ fun TOTPScreen(
         if (secrets.itemCount <= 0 && !isSecretLoading) {
             TOTPEmpty(
                 modifier.padding(padding),
-                scanQrOnClick = {},
                 enterManuallyOnClick = dialogState::show
             )
         }
@@ -227,14 +226,13 @@ fun TOTPCard(
 @Composable
 fun TOTPEmptyPreview() {
     TOTPHubTheme(darkTheme = true) {
-        TOTPEmpty(Modifier.fillMaxSize(), {}, {})
+        TOTPEmpty(Modifier.fillMaxSize()) {}
     }
 }
 
 @Composable
 fun TOTPEmpty(
     modifier: Modifier = Modifier,
-    scanQrOnClick: () -> Unit,
     enterManuallyOnClick: () -> Unit
 ) {
     Column(
