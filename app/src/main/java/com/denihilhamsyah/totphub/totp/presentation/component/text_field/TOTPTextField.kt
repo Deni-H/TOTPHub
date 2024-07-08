@@ -4,6 +4,8 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -35,7 +37,9 @@ fun TOTPTextField(
     minLines: Int = 1,
     maxLines: Int = if (singleLine) 1 else Int. MAX_VALUE,
     contentPadding: PaddingValues = PaddingValues(8.dp),
-    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() }
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
 ) {
     BasicTextField(
         modifier = modifier,
@@ -48,7 +52,9 @@ fun TOTPTextField(
         onValueChange = onValueChange,
         textStyle = MaterialTheme.typography.bodyMedium.copy(
             color = MaterialTheme.colorScheme.primary
-        )
+        ),
+        keyboardOptions = keyboardOptions,
+        keyboardActions = keyboardActions,
     ) { innerTextField ->
         OutlinedTextFieldDefaults.DecorationBox(
             value = value,
