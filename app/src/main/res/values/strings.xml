@@ -19,4 +19,5 @@
     <string name="secret">Secret</string>
     <string name="add">Add</string>
     <string name="indicator_animation">Indicator animation</string>
+    <string name="add_totp">Add TOTP</string>
 </resources>

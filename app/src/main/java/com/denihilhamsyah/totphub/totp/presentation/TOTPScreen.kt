@@ -48,7 +48,6 @@ import com.denihilhamsyah.totphub.R
 import com.denihilhamsyah.totphub.totp.domain.model.SecretDetails
 import com.denihilhamsyah.totphub.totp.presentation.component.ObserveAsEvents
 import com.denihilhamsyah.totphub.totp.presentation.component.PrimaryButton
-import com.denihilhamsyah.totphub.totp.presentation.component.SecondaryButton
 import com.denihilhamsyah.totphub.totp.presentation.component.TOTPTopBar
 import com.denihilhamsyah.totphub.totp.presentation.component.dialog.rememberDialogState
 import com.denihilhamsyah.totphub.totp.presentation.component.theme_switch.ThemeSwitchState
@@ -260,13 +259,7 @@ fun TOTPEmpty(
         Spacer(modifier = Modifier.height(26.dp))
         PrimaryButton(
             modifier = Modifier.fillMaxWidth(),
-            text = stringResource(R.string.scan_qr_code),
-            onClick = scanQrOnClick
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        SecondaryButton(
-            modifier = Modifier.fillMaxWidth(),
-            text = stringResource(R.string.enter_manually),
+            text = stringResource(R.string.add_totp),
             onClick = enterManuallyOnClick
         )
     }
