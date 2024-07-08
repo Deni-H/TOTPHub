@@ -18,6 +18,10 @@ realm-koltin-version = "2.0.0"
 room-version = "2.6.1"
 lifecycleRuntimeComposeAndroid = "2.8.2"
 paging_version = "3.3.0"
+googleGmsGoogleServices = "4.4.2"
+firebaseAnalytics = "22.0.2"
+firebaseCrashlytics = "19.0.2"
+googleFirebaseCrashlytics = "3.0.2"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -50,6 +54,8 @@ room-ktx = { group = "androidx.room", name = "room-ktx", version = "room-version
 androidx-lifecycle-runtime-compose-android = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose-android", version.ref = "lifecycleRuntimeComposeAndroid" }
 androidx-paging-runtime = { group = "androidx.paging", name = "paging-runtime", version.ref = "paging_version" }
 androidx-paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "paging_version" }
+firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics", version.ref = "firebaseAnalytics" }
+firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics", version.ref = "firebaseCrashlytics" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -58,3 +64,5 @@ devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "kspVersion" }
 dagger-hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 realm-kotlin = { id = "io.realm.kotlin", version.ref = "realm-koltin-version"}
 room-plugin = { id = "androidx.room", version.ref = "room-version"}
+google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }
+google-firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "googleFirebaseCrashlytics" }

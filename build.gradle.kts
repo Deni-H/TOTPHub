@@ -7,4 +7,6 @@ plugins {
     alias(libs.plugins.devtools.ksp) apply false
     alias(libs.plugins.realm.kotlin) apply false
     alias(libs.plugins.room.plugin) apply false
+    alias(libs.plugins.google.gms.google.services) apply false
+    alias(libs.plugins.google.firebase.crashlytics) apply false
 }
