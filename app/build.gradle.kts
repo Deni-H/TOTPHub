@@ -109,4 +109,8 @@ dependencies {
     // Paging3
     implementation(libs.androidx.paging.runtime)
     implementation(libs.androidx.paging.compose)
+
+    // Play Service Code Scanner
+    implementation(libs.play.service.code.scanner)
+    implementation(libs.play.service.base)
 }
