@@ -84,9 +84,10 @@ class MlKitBarcodeScanner(
                 downloadState = DownloadState.from(update.installState)
             )
 
-            // Check if it's should unregister the listener
+            // Unregister listener and reset the State
             if (isTerminateState(update.installState)) {
                 installClient.unregisterListener(this)
+                _installModuleState.value = InstallModuleState()
             }
         }
 

@@ -20,4 +20,13 @@
     <string name="add">Add</string>
     <string name="indicator_animation">Indicator animation</string>
     <string name="add_totp">Add TOTP</string>
+    <string name="downloading_qr_module">Downloading QR Module</string>
+    <string name="canceled">Canceled</string>
+    <string name="completed">Completed</string>
+    <string name="downloading">Downloading</string>
+    <string name="download_paused">Download Paused</string>
+    <string name="failed">Failed</string>
+    <string name="installing">Installing</string>
+    <string name="pending">Pending</string>
+    <string name="unknown">-</string>
 </resources>

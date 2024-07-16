@@ -17,7 +17,7 @@ interface ScanQrRepository {
 
 data class InstallModuleState(
     val downloadProgress: DownloadProgress = DownloadProgress(),
-    val downloadState: DownloadState = DownloadState.STATE_UNKNOWN
+    val downloadState: DownloadState = DownloadState.UNKNOWN
 )
 
 data class DownloadProgress(
@@ -26,14 +26,14 @@ data class DownloadProgress(
 )
 
 enum class DownloadState(val value: Int) {
-    STATE_CANCELED(3),
-    STATE_COMPLETED(4),
-    STATE_DOWNLOADING(2),
-    STATE_DOWNLOAD_PAUSED(7),
-    STATE_FAILED(5),
-    STATE_INSTALLING(6),
-    STATE_PENDING(1),
-    STATE_UNKNOWN(0);
+    CANCELED(3),
+    COMPLETED(4),
+    DOWNLOADING(2),
+    DOWNLOAD_PAUSED(7),
+    FAILED(5),
+    INSTALLING(6),
+    PENDING(1),
+    UNKNOWN(0);
 
     companion object {
         fun from(value: Int): DownloadState = entries.first { it.value == value }
