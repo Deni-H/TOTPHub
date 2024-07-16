@@ -1,6 +1,7 @@
 package com.denihilhamsyah.totphub.qr.data
 
 import arrow.core.Either
+import com.denihilhamsyah.totphub.qr.domain.DownloadProgress
 import com.denihilhamsyah.totphub.qr.domain.DownloadState
 import com.denihilhamsyah.totphub.qr.domain.InstallModuleState
 import com.denihilhamsyah.totphub.qr.domain.ScanQrRepository
@@ -71,11 +72,11 @@ class MlKitBarcodeScanner(
     inner class ModuleInstallProgressListener : InstallStatusListener {
         override fun onInstallStatusUpdated(update: ModuleInstallStatusUpdate) {
             update.progressInfo?.let {
-                val progress = (it.bytesDownloaded * 100 / it.totalBytesToDownload)
-
-                // Normalizing the progress
-                val normalizedProgress = (progress / 100).coerceIn(0L, 1L)
-                _installModuleState.value = _installModuleState.value.copy(progress = normalizedProgress)
+                // Updating the progress
+                _installModuleState.value = _installModuleState.value.copy(downloadProgress = DownloadProgress(
+                    totalBytesToDownload = it.totalBytesToDownload,
+                    bytesDownloaded = it.bytesDownloaded
+                ))
             }
 
             // Updating the download state

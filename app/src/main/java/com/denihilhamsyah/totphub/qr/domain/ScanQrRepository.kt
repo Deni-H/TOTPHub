@@ -16,8 +16,13 @@ interface ScanQrRepository {
 }
 
 data class InstallModuleState(
-    val progress: Long = 0L,
+    val downloadProgress: DownloadProgress = DownloadProgress(),
     val downloadState: DownloadState = DownloadState.STATE_UNKNOWN
+)
+
+data class DownloadProgress(
+    val totalBytesToDownload: Long = 0L,
+    val bytesDownloaded: Long = 0L
 )
 
 enum class DownloadState(val value: Int) {
