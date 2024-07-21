@@ -21,6 +21,7 @@ data class InstallModuleState(
 )
 
 data class DownloadProgress(
+    val progress: Float = 0f,
     val totalBytesToDownload: Long = 0L,
     val bytesDownloaded: Long = 0L
 )

@@ -2,7 +2,9 @@ package com.denihilhamsyah.totphub.totp.presentation.component.ui_text
 
 import com.denihilhamsyah.totphub.R
 import com.denihilhamsyah.totphub.qr.domain.DownloadState
+import com.denihilhamsyah.totphub.qr.domain.error.ScanQrError
 import com.denihilhamsyah.totphub.totp.domain.error.DatabaseError
+import com.denihilhamsyah.totphub.totp.domain.error.ParseQrError
 import com.denihilhamsyah.totphub.totp.domain.error.TextFieldError
 
 fun DatabaseError.asUiText(): UiText {
@@ -33,5 +35,28 @@ fun DownloadState.asUiText(): UiText {
         DownloadState.INSTALLING -> UiText.StringResource(R.string.installing)
         DownloadState.PENDING -> UiText.StringResource(R.string.pending)
         DownloadState.UNKNOWN -> UiText.StringResource(R.string.unknown)
+    }
+}
+
+fun ScanQrError.asUiText(): UiText {
+    return when(this) {
+        ScanQrError.ScanError.NO_RESULT -> UiText.StringResource(R.string.no_result)
+        ScanQrError.ScanError.MODULE_NOT_INSTALLED -> UiText.StringResource(R.string.module_not_installed)
+        ScanQrError.ScanError.UNKNOWN_ERROR -> UiText.StringResource(R.string.unknown_error)
+        ScanQrError.InstallModuleError.NETWORK_FAILURE -> UiText.StringResource(R.string.network_failure)
+        ScanQrError.InstallModuleError.INSUFFICIENT_STORAGE -> UiText.StringResource(R.string.inufficient_storage)
+        ScanQrError.InstallModuleError.INVALID_MODULE -> UiText.StringResource(R.string.invalid_module)
+        ScanQrError.InstallModuleError.INSTALLATION_TIMEOUT -> UiText.StringResource(R.string.installation_timeout)
+        ScanQrError.InstallModuleError.UNKNOWN_ERROR -> UiText.StringResource(R.string.unknown_error)
+    }
+}
+
+fun ParseQrError.TOTPError.asUiText(): UiText {
+    return when(this) {
+        ParseQrError.TOTPError.INVALID_FORMAT -> UiText.StringResource(R.string.invalid_qr_format)
+        ParseQrError.TOTPError.SECRET_NOT_FOUND -> UiText.StringResource(R.string.secret_not_found)
+        ParseQrError.TOTPError.SECRET_LABEL_NOT_FOUND -> UiText.StringResource(R.string.secret_label_not_found)
+        ParseQrError.TOTPError.ACCOUNT_NAME_NOT_FOUND -> UiText.StringResource(R.string.account_name_not_found)
+        ParseQrError.TOTPError.UNKNOWN_ERROR -> UiText.StringResource(R.string.unknown_error)
     }
 }

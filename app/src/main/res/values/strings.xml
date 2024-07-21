@@ -29,4 +29,17 @@
     <string name="installing">Installing</string>
     <string name="pending">Pending</string>
     <string name="unknown">-</string>
+    <string name="no_result">No result</string>
+    <string name="module_not_installed">Module not installed</string>
+    <string name="unknown_error">Unknown error</string>
+    <string name="network_failure">Network failure</string>
+    <string name="inufficient_storage">Inufficient storage</string>
+    <string name="invalid_module">Invalid module</string>
+    <string name="installation_timeout">Installation timeout</string>
+    <string name="module_installed">Module installed</string>
+    <string name="invalid_qr_format">Invalid QR format</string>
+    <string name="account_name_not_found">Account name not found</string>
+    <string name="secret_label_not_found">Secret label not found</string>
+    <string name="add_manually_icon">Add manually Icon</string>
+    <string name="scan_icon">Scan Icon</string>
 </resources>

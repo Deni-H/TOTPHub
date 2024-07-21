@@ -18,7 +18,6 @@ import com.google.android.gms.common.moduleinstall.ModuleInstallStatusUpdate.Ins
 import com.google.mlkit.vision.codescanner.GmsBarcodeScanner
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.tasks.await
 
 class MlKitBarcodeScanner(
@@ -30,7 +29,7 @@ class MlKitBarcodeScanner(
 
     private val _installModuleState = MutableStateFlow(InstallModuleState())
     override val installModuleState: Flow<InstallModuleState>
-        get() = _installModuleState.asStateFlow()
+        get() = _installModuleState
 
     override suspend fun scanQr(): Either<ScanQrError.ScanError, String> {
         return Either.catch {
@@ -73,10 +72,15 @@ class MlKitBarcodeScanner(
         override fun onInstallStatusUpdated(update: ModuleInstallStatusUpdate) {
             update.progressInfo?.let {
                 // Updating the progress
-                _installModuleState.value = _installModuleState.value.copy(downloadProgress = DownloadProgress(
-                    totalBytesToDownload = it.totalBytesToDownload,
-                    bytesDownloaded = it.bytesDownloaded
-                ))
+                try {
+                    _installModuleState.value = _installModuleState.value.copy(downloadProgress = DownloadProgress(
+                        progress = (it.bytesDownloaded * 100 / it.totalBytesToDownload).toFloat(),
+                        totalBytesToDownload = it.totalBytesToDownload,
+                        bytesDownloaded = it.bytesDownloaded
+                    ))
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
             }
 
             // Updating the download state
