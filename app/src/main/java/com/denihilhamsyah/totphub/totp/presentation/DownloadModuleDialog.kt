@@ -33,15 +33,12 @@ import com.denihilhamsyah.totphub.ui.theme.TOTPHubTheme
 fun DownloadModuleDialog(
     modifier: Modifier = Modifier,
     dialogState: DialogState,
-    progress: Long,
+    progress: Float,
     downloaded: String,
     total: String,
     downloadState: DownloadState
 ) {
-    DialogWrapper(
-        dialogState = dialogState,
-        onDismissRequest = dialogState::hide
-    ) {
+    DialogWrapper(dialogState = dialogState) {
         Card(shape = RoundedCornerShape(16.dp)) {
             Column(
                 modifier = modifier
@@ -84,7 +81,7 @@ fun DownloadModuleDialog(
                         modifier = Modifier
                             .fillMaxWidth()
                             .clip(RoundedCornerShape(8.dp)),
-                        progress = { progress.toFloat() / 100 },
+                        progress = { progress / 100 },
                     )
                 }
                 Text(
@@ -106,7 +103,7 @@ private fun DownloadModuleDialogPreview() {
         DownloadModuleDialog(
             modifier = Modifier.fillMaxWidth(),
             dialogState = dialogState,
-            progress = 5,
+            progress = 5.0F,
             downloaded = "12.5kB",
             total = "7.4MB",
             downloadState = DownloadState.INSTALLING
