@@ -1,6 +1,6 @@
 package com.denihilhamsyah.totphub.totp.domain.util
 
-import com.denihilhamsyah.totphub.totp.domain.error.Error
+import com.denihilhamsyah.totphub.core.domain.error.Error
 
 typealias RootError = Error
 

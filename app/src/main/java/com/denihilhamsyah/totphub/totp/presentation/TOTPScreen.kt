@@ -48,10 +48,12 @@ import com.denihilhamsyah.totphub.R
 import com.denihilhamsyah.totphub.totp.domain.model.SecretDetails
 import com.denihilhamsyah.totphub.totp.presentation.component.ObserveAsEvents
 import com.denihilhamsyah.totphub.totp.presentation.component.PrimaryButton
+import com.denihilhamsyah.totphub.totp.presentation.component.SecondaryButton
 import com.denihilhamsyah.totphub.totp.presentation.component.TOTPTopBar
 import com.denihilhamsyah.totphub.totp.presentation.component.dialog.rememberDialogState
 import com.denihilhamsyah.totphub.totp.presentation.component.theme_switch.ThemeSwitchState
 import com.denihilhamsyah.totphub.totp.presentation.component.time_indicator.TimeIndicator
+import com.denihilhamsyah.totphub.totp.util.FormatUtils
 import com.denihilhamsyah.totphub.ui.theme.TOTPHubTheme
 import kotlinx.coroutines.launch
 
@@ -64,7 +66,9 @@ fun TOTPScreen(
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
-    val dialogState = rememberDialogState()
+    val addSecretDialogState = rememberDialogState()
+    val addSecretMenuDialogState = rememberDialogState()
+    val downloadModuleDialogState = rememberDialogState()
 
     val secrets = viewModel.secrets.collectAsLazyPagingItems()
     val totpCodes by viewModel.totpCodes.collectAsStateWithLifecycle()
@@ -76,6 +80,7 @@ fun TOTPScreen(
     val secretFieldState by viewModel.secretFieldState.collectAsStateWithLifecycle()
     val secretLabelFieldState by viewModel.secretLabelFieldState.collectAsStateWithLifecycle()
     val remainingCountDown by viewModel.remainingCountDown.collectAsStateWithLifecycle()
+    val installModuleState by viewModel.installModuleState.collectAsStateWithLifecycle()
 
     ObserveAsEvents(viewModel.totpEvent) { event ->
         when (event) {
@@ -89,13 +94,28 @@ fun TOTPScreen(
                     snackbarHostState.showSnackbar(event.uiText.asString(context))
                 }
             }
+
+            is TOTPEvent.OnModuleInstalled -> {
+                coroutineScope.launch {
+                    snackbarHostState.showSnackbar(event.uiText.asString(context))
+                }
+            }
+
+            is TOTPEvent.OnDownloadingModule -> downloadModuleDialogState.show()
+
+            is TOTPEvent.OnInstallModuleFailed -> {
+                downloadModuleDialogState.hide()
+                coroutineScope.launch {
+                    snackbarHostState.showSnackbar(event.uiText.asString(context))
+                }
+            }
         }
     }
 
     if (state.isLoading) LoadingDialog()
 
     AddSecretDialog(
-        dialogState = dialogState,
+        dialogState = addSecretDialogState,
         accountNameFieldState = accountNameFieldState,
         onAccountNameFieldChange = viewModel::onAccountNameFieldChange,
         secretLabelFieldState = secretLabelFieldState,
@@ -104,8 +124,22 @@ fun TOTPScreen(
         onSecretFieldChange = viewModel::onSecretFieldChange,
         onButtonClick = {
             viewModel.onAddSecretDialogClick()
-            dialogState.hide()
+            addSecretDialogState.hide()
         }
+    )
+
+    AddSecretMenuDialog(
+        dialogState = addSecretMenuDialogState,
+        onScanQr = viewModel::scanQr,
+        onEnterManually = addSecretDialogState::show
+    )
+
+    DownloadModuleDialog(
+        dialogState = downloadModuleDialogState,
+        progress = installModuleState.downloadProgress.progress,
+        downloaded = FormatUtils.formatBytes(installModuleState.downloadProgress.bytesDownloaded),
+        total = FormatUtils.formatBytes(installModuleState.downloadProgress.totalBytesToDownload),
+        downloadState = installModuleState.downloadState
     )
 
     Scaffold(
@@ -116,7 +150,7 @@ fun TOTPScreen(
                     shape = CircleShape,
                     containerColor = MaterialTheme.colorScheme.primary,
                     contentColor = MaterialTheme.colorScheme.onPrimary,
-                    onClick = dialogState::show,
+                    onClick = addSecretMenuDialogState::show,
                     content = {
                         Icon(
                             imageVector = ImageVector.vectorResource(R.drawable.ic_add),
@@ -140,7 +174,8 @@ fun TOTPScreen(
         if (secrets.itemCount <= 0 && !isSecretLoading) {
             TOTPEmpty(
                 modifier.padding(padding),
-                enterManuallyOnClick = dialogState::show
+                scanQrOnClick = viewModel::scanQr,
+                enterManuallyOnClick = addSecretDialogState::show
             )
         }
         else TOTPContent(
@@ -226,13 +261,14 @@ fun TOTPCard(
 @Composable
 fun TOTPEmptyPreview() {
     TOTPHubTheme(darkTheme = true) {
-        TOTPEmpty(Modifier.fillMaxSize()) {}
+        TOTPEmpty(Modifier.fillMaxSize(), {}, {})
     }
 }
 
 @Composable
 fun TOTPEmpty(
     modifier: Modifier = Modifier,
+    scanQrOnClick: () -> Unit,
     enterManuallyOnClick: () -> Unit
 ) {
     Column(
@@ -257,7 +293,13 @@ fun TOTPEmpty(
         Spacer(modifier = Modifier.height(26.dp))
         PrimaryButton(
             modifier = Modifier.fillMaxWidth(),
-            text = stringResource(R.string.add_totp),
+            text = stringResource(R.string.scan_qr_code),
+            onClick = scanQrOnClick
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        SecondaryButton(
+            modifier = Modifier.fillMaxWidth(),
+            text = stringResource(R.string.enter_manually),
             onClick = enterManuallyOnClick
         )
     }

@@ -26,7 +26,7 @@ fun PrimaryButton(
     onClick: () -> Unit
 ) {
     Button(
-        modifier = modifier,
+        modifier = modifier.height(50.dp),
         colors = ButtonDefaults.buttonColors().copy(
             containerColor = MaterialTheme.colorScheme.primary,
             contentColor = MaterialTheme.colorScheme.onPrimary

@@ -22,6 +22,8 @@ googleGmsGoogleServices = "4.4.2"
 firebaseAnalytics = "22.0.2"
 firebaseCrashlytics = "19.0.2"
 googleFirebaseCrashlytics = "3.0.2"
+play-service-code-scanner-version = "16.1.0"
+play-service-base-version = "18.5.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -56,6 +58,8 @@ androidx-paging-runtime = { group = "androidx.paging", name = "paging-runtime", 
 androidx-paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "paging_version" }
 firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics", version.ref = "firebaseAnalytics" }
 firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics", version.ref = "firebaseCrashlytics" }
+play-service-code-scanner = { group = "com.google.android.gms", name = "play-services-code-scanner", version.ref = "play-service-code-scanner-version"}
+play-service-base = { group = "com.google.android.gms", name = "play-services-base", version.ref = "play-service-base-version"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

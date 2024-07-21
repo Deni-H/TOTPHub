@@ -17,8 +17,8 @@ android {
         applicationId = "com.denihilhamsyah.totphub"
         minSdk = 24
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0.0-beta"
+        versionCode = 2
+        versionName = "1.1.0-rc"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -109,4 +109,8 @@ dependencies {
     // Paging3
     implementation(libs.androidx.paging.runtime)
     implementation(libs.androidx.paging.compose)
+
+    // Play Service Code Scanner
+    implementation(libs.play.service.code.scanner)
+    implementation(libs.play.service.base)
 }

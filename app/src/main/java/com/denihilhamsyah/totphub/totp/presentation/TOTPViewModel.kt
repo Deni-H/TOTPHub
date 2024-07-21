@@ -4,12 +4,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.denihilhamsyah.totphub.R
+import com.denihilhamsyah.totphub.qr.domain.InstallModuleState
+import com.denihilhamsyah.totphub.qr.domain.ScanQrRepository
 import com.denihilhamsyah.totphub.totp.domain.model.SecretDetails
 import com.denihilhamsyah.totphub.totp.domain.repository.DatabaseRepository
 import com.denihilhamsyah.totphub.totp.domain.repository.TOTPRepository
 import com.denihilhamsyah.totphub.totp.domain.use_case.IsValidAccountNameUseCase
 import com.denihilhamsyah.totphub.totp.domain.use_case.IsValidSecretLabelUseCase
 import com.denihilhamsyah.totphub.totp.domain.use_case.IsValidSecretUseCase
+import com.denihilhamsyah.totphub.totp.domain.use_case.ParseTOTPQrUseCase
 import com.denihilhamsyah.totphub.totp.domain.util.Result
 import com.denihilhamsyah.totphub.totp.presentation.component.text_field.TextFieldState
 import com.denihilhamsyah.totphub.totp.presentation.component.ui_text.UiText
@@ -18,8 +21,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -28,9 +33,11 @@ import javax.inject.Inject
 class TOTPViewModel @Inject constructor(
     private val totpRepository: TOTPRepository,
     private val databaseRepository: DatabaseRepository,
+    private val scanQrRepository: ScanQrRepository,
     private val isValidSecretUseCase: IsValidSecretUseCase,
     private val isValidSecretLabelUseCase: IsValidSecretLabelUseCase,
-    private val isValidAccountNameUseCase: IsValidAccountNameUseCase
+    private val isValidAccountNameUseCase: IsValidAccountNameUseCase,
+    private val parseTOTPQrUseCase: ParseTOTPQrUseCase
 ) : ViewModel() {
 
     private val totpEventChannel = Channel<TOTPEvent>()
@@ -58,8 +65,44 @@ class TOTPViewModel @Inject constructor(
     private val _remainingCountDown = MutableStateFlow(0L)
     val remainingCountDown = _remainingCountDown.asStateFlow()
 
+    val installModuleState = scanQrRepository.installModuleState.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = InstallModuleState()
+    )
+
     init {
         startClock()
+    }
+
+    fun scanQr() {
+        viewModelScope.launch {
+            val isModuleInstalled = scanQrRepository.isModuleInstalled()
+            if (isModuleInstalled) {
+                scanQrRepository.scanQr()
+                    .onRight {
+                        when (val result = parseTOTPQrUseCase(it)) {
+                            is Result.Error -> {
+                                val errorMessage = result.error.asUiText()
+                                totpEventChannel.send(TOTPEvent.OnOperationFailed(errorMessage))
+                            }
+                            is Result.Success -> databaseRepository.addSecret(result.data)
+                        }
+                    }
+                    .onLeft {
+                        val errorMessage = it.asUiText()
+                        totpEventChannel.send(TOTPEvent.OnOperationFailed(errorMessage))
+                    }
+            } else {
+                totpEventChannel.send(TOTPEvent.OnDownloadingModule)
+                scanQrRepository.installModule()
+                    .onRight { totpEventChannel.send(TOTPEvent.OnModuleInstalled(UiText.StringResource(R.string.module_installed))) }
+                    .onLeft {
+                        val errorMessage = it.asUiText()
+                        totpEventChannel.send(TOTPEvent.OnInstallModuleFailed(errorMessage))
+                    }
+            }
+        }
     }
 
     fun onSecretFieldChange(secret: String) {

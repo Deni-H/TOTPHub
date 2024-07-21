@@ -6,7 +6,7 @@ import androidx.compose.ui.window.Dialog
 @Composable
 fun DialogWrapper(
     dialogState: DialogState,
-    onDismissRequest: () -> Unit,
+    onDismissRequest: () -> Unit = {},
     content: @Composable () -> Unit
 ) {
     if (dialogState.isVisible) {
